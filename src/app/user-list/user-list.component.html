@@ -4,19 +4,19 @@
     <table class="table table-striped">
       <thead>
         <tr>
-           <!--
+          <!--
             FELADAT!
             1. A következő 5 fejléc cellára állítsd be az
               onColumnSelect eseménykezelőt kattintás esetén.
             2. Minden metódusnak string-ként add át az oszlophoz
               tartozó kulcsot, pl.: 'id' vagy 'email'.
            -->
-           <th>#</th>
-           <th>Name</th>
-           <th>Email</th>
-           <th>Address</th>
-           <th>Active</th>
-          <th>show</th>
+          <th># +`${user.id}`</th>
+          <th (click)="onColumnSelect()">Name +`${user.name}`</th>
+          <th (click)="onColumnSelect()">Email +`${user.email}`</th>
+          <th (click)="onColumnSelect()">Address +`${user.address}`</th>
+          <th (click)="onColumnSelect()">Active +`${user.active}`</th>
+          <th (click)="onColumnSelect()">show +`${user.show}`</th>
         </tr>
       </thead>
       <tbody>
@@ -26,7 +26,11 @@
           (függőleges vonallal kezdődik, az is kell):
              | filter:phraseString:'name' | sorter:columnKey
          -->
-         <tr *ngFor="let user of users">
+        <tr
+          *ngFor="
+            let user of users | filter: phraseString:'name' | sorter: columnKey
+          "
+        >
           <td>{{ user.id }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
@@ -42,6 +46,9 @@
     </table>
   </div>
   <div class="col-4 pt-5">
-    <app-user-detail [user]="currentUser" (delUser)="onDeleteUser($event)"></app-user-detail>
+    <app-user-detail
+      [user]="currentUser"
+      (delUser)="onDeleteUser($event)"
+    ></app-user-detail>
   </div>
 </div>

@@ -1,37 +1,51 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filter'
+  name: 'sorter'
 })
-export class FilterPipe implements PipeTransform {
+export class SorterPipe implements PipeTransform {
+
   /**
-   * A kapott tömb szűrése a szűrőkifejezés alapján.
-   * @param value {any[]} - a szűrendő tömb
-   * @param phrase {string} - a szűrőkifejezés
-   * @param key {string} - az objektumkulcs, amely alapján szűr
-   * @returns {any[]} - a kifejezés alapján szűrt tömb
+   * A kapott tömb rendezése a szűrőkifejezés alapján.
+   * @param value {any[]} - a tömb
+   * @param key {string} - az objektumkulcs, amely alapján rendez
+   * @returns {any[]} - a kulcs alapján rendezett tömb
    */
-  transform(value: any[], phrase: string, key: string = ''): any {
+  transform(value: any[], key: string): any[] {
     // A KÖVETKEZŐ SORT TÁVOLÍTSD EL!!!
-    return value;
+    // return value;
 
     /**
      * FELADAT!
-     * Ellenőrzés: ha a value nem tömb, vagy nincs megadva a phrase vagy a key,
+     * Ellenőrzés: ha a value nem tömb vagy nincs megadva a key,
      * térj vissza a value változóval.
      */
 
-
+    if (!(value instanceof Array) || (key === undefined)) {
+      return value;
+    }
 
     /**
      * FELADAT!
-     * Térj vissza a value.filter metódus eredményével (a value mindig tömb).
-     * 1. Alakítsd az item[key] értékét string típusúra.
-     * 2. A visszatérési érték true, ha valahol szerepel benne a phrase.
-     * TIPP: az összehasonlítás előtt a két értéket alakítsd kisbetűsre.
+     * Térj vissza a value.sort metódus eredményével!
+     * 1. Ha az a[key] és a b[key] típusa is szám, térj vissza a különbségükkel.
+     * 2. Ha nem számok, akkor mind a kettőt konvertáld string típusúra,
+     *  azután alakítsd őket kisbetűssé.
+     * 3. Térj vissza a két string localeCompare metódus által visszaadott
+     *  összehasonlításának az eredményével.
      */
 
-
+    return value.sort((a, b) => {
+      if (isNaN(a[key] || isNaN(b[key]))) {
+        const aString = a[key] + "";
+        const bString = b[key] + "";
+        return aString.toLocaleLowerCase().localeCompare(bString.toLocaleLowerCase());
+      }
+      else {
+        return a[key] - b[key];
+      }
+    });
   }
 
 }
+
