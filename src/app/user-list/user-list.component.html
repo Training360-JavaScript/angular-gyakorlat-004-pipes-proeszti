@@ -11,12 +11,12 @@
             2. Minden metódusnak string-ként add át az oszlophoz
               tartozó kulcsot, pl.: 'id' vagy 'email'.
            -->
-          <th># +`${user.id}`</th>
-          <th (click)="onColumnSelect()">Name +`${user.name}`</th>
-          <th (click)="onColumnSelect()">Email +`${user.email}`</th>
-          <th (click)="onColumnSelect()">Address +`${user.address}`</th>
-          <th (click)="onColumnSelect()">Active +`${user.active}`</th>
-          <th (click)="onColumnSelect()">show +`${user.show}`</th>
+          <th>#</th>
+          <th (click)="onColumnSelects('name')">Name</th>
+          <th (click)="onColumnSelects('email')">Email</th>
+          <th (click)="onColumnSelects('address')">Address</th>
+          <th (click)="onColumnSelects('active')">Active</th>
+          <th (click)="onColumnSelects('show')">Show</th>
         </tr>
       </thead>
       <tbody>
@@ -28,7 +28,9 @@
          -->
         <tr
           *ngFor="
-            let user of users | filter: phraseString:'name' | sorter: columnKey
+            let user of users
+              | filter: phraseString:columnKey
+              | sorter: columnKey
           "
         >
           <td>{{ user.id }}</td>

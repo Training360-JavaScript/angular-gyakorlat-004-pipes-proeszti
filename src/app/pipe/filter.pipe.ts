@@ -1,51 +1,56 @@
+import { NgIf } from '@angular/common';
+import { isNgTemplate } from '@angular/compiler';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'sorter'
+  name: 'filter'
 })
-export class SorterPipe implements PipeTransform {
-
+export class FilterPipe implements PipeTransform {
   /**
-   * A kapott tömb rendezése a szűrőkifejezés alapján.
-   * @param value {any[]} - a tömb
-   * @param key {string} - az objektumkulcs, amely alapján rendez
-   * @returns {any[]} - a kulcs alapján rendezett tömb
+   * A kapott tömb szűrése a szűrőkifejezés alapján.
+   * @param value {any[]} - a szűrendő tömb
+   * @param phrase {string} - a szűrőkifejezés
+   * @param key {string} - az objektumkulcs, amely alapján szűr
+   * @returns {any[]} - a kifejezés alapján szűrt tömb
    */
-  transform(value: any[], key: string): any[] {
+  transform(value: any[], phrase: string, key: string = ''): any {
     // A KÖVETKEZŐ SORT TÁVOLÍTSD EL!!!
     // return value;
 
     /**
      * FELADAT!
-     * Ellenőrzés: ha a value nem tömb vagy nincs megadva a key,
+     * Ellenőrzés: ha a value nem tömb, vagy nincs megadva a phrase vagy a key,
      * térj vissza a value változóval.
      */
 
-    if (!(value instanceof Array) || (key === undefined)) {
+
+    if (!(value instanceof Array) || (phrase === undefined) || (key === undefined)) {
       return value;
     }
 
+
+
     /**
      * FELADAT!
-     * Térj vissza a value.sort metódus eredményével!
-     * 1. Ha az a[key] és a b[key] típusa is szám, térj vissza a különbségükkel.
-     * 2. Ha nem számok, akkor mind a kettőt konvertáld string típusúra,
-     *  azután alakítsd őket kisbetűssé.
-     * 3. Térj vissza a két string localeCompare metódus által visszaadott
-     *  összehasonlításának az eredményével.
+     * Térj vissza a value.filter metódus eredményével (a value mindig tömb).
+     * 1. Alakítsd az item[key] értékét string típusúra.
+     * 2. A visszatérési érték true, ha valahol szerepel benne a phrase.
+     * TIPP: az összehasonlítás előtt a két értéket alakítsd kisbetűsre.
      */
 
-    return value.sort((a, b) => {
-      if (isNaN(a[key] || isNaN(b[key]))) {
-        const aString = a[key] + "";
-        const bString = b[key] + "";
-        return aString.toLocaleLowerCase().localeCompare(bString.toLocaleLowerCase());
+
+    return value.filter(item => {
+      const stringValue = item[key] + "";
+      if (stringValue.toLocaleLowerCase().includes(phrase)) {
+        return true;
       }
       else {
-        return a[key] - b[key];
+        return false;
       }
     });
+
+
+
   }
 
 }
-

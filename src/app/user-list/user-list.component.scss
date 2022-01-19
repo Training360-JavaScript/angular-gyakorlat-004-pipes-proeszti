@@ -3,9 +3,9 @@
   1. Ha az egeret fölé viszik, legyen a háttérszíne halványszürke.
   2. Ha az egeret fölé viszik, jelenjen meg a mutató kurzor.
 */
-.th {
+th {
   &:hover {
-    background-color: bisque;
+    background-color: gray;
   }
   &:hover {
     cursor: pointer;

@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -16,7 +17,8 @@ import { SorterPipe } from './pipe/sorter.pipe';
     SorterPipe,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
